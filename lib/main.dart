@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:learn_flutter_clean/core/app_theme.dart';
 
 void main() {
+
+
   runApp(const MyApp());
 }
 
