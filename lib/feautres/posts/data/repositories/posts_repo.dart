@@ -13,18 +13,14 @@ typedef Future<Unit> DeleteOrUpdateOrAddPosts();
 class PostsRepositories implements BasePostsRepository {
   final PostsLocalDataSource postsLocalDataSource;
   final PostsRemoteDataSource postsRemoteDataSource;
-
   final NetworkInfo networkInfo;
-
   PostsRepositories({required this.networkInfo,
     required this.postsLocalDataSource,
     required this.postsRemoteDataSource});
-
   Future<Either<Failure,Unit>> _getAllFunction(
       DeleteOrUpdateOrAddPosts deleteOrUpdateOrAddPost
       )async{
     if(await networkInfo.isConnected){
-
       try{
         await deleteOrUpdateOrAddPost();
         return right(unit);
@@ -36,7 +32,6 @@ class PostsRepositories implements BasePostsRepository {
       return Left(OffLineFailure());
     }
   }
-
   @override
   Future<Either<Failure, List<Posts>>> getAllPosts() async {
     if (await networkInfo.isConnected) {
@@ -56,23 +51,20 @@ class PostsRepositories implements BasePostsRepository {
       }
     }
   }
-
   @override
   Future<Either<Failure, Unit>> addPosts(Posts posts) async {
     final PostsModel postsModel = PostsModel(
-        id: posts.id, title: posts.title, body: posts.body);
+        title: posts.title, body: posts.body);
     return await _getAllFunction((){
       return postsRemoteDataSource.addPosts(postsModel);
     });
   }
-
   @override
   Future<Either<Failure, Unit>> deletePosts(int id)async {
     return await _getAllFunction((){
       return postsRemoteDataSource.deletePosts(id);
     });
   }
-
   @override
   Future<Either<Failure, Unit>> updatePosts(Posts posts) async{
     final PostsModel postsModel = PostsModel(
@@ -81,6 +73,4 @@ class PostsRepositories implements BasePostsRepository {
      return postsRemoteDataSource.updatePosts(postsModel);
         });
   }
-
-
 }

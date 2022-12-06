@@ -2,10 +2,10 @@
 import 'package:equatable/equatable.dart';
 
 class Posts  extends Equatable{
-  final int id;
+  final int? id;
   final String title;
   final String body;
-  Posts({required this.id, required this.title, required this.body});
+  Posts({ this.id, required this.title, required this.body});
 
   @override
   // TODO: implement props
